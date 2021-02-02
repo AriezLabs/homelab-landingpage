@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mini.local</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="@fortawesome/fontawesome-free/css/all.css"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <section class="hero is-primary mb-4">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Homelab
+                </h1>
+                <h2 id="time" class="subtitle">{{ timestr }}</h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="container m-4">
+
+        <div class="columns">
+          <div class="column">
+            <div class="container notification">
+              <h1 class="title is-4">Apps</h1>
+              <a class="button is-primary is-large is-fullwidth mb-2" href="/iris/" onclick="javascript:event.target.port=6680">
+                <i class="fas fa-compact-disc pr-2"></i>
+                Mopidy
+              </a>
+              <a class="button is-primary is-large is-fullwidth mb-2" href="/admin/core/snapshot/" onclick="javascript:event.target.port=8000">
+                <i class="fas fa-book pr-2"></i>
+                ArchiveBox
+              </a>
+              <a class="button is-primary is-large is-fullwidth mb-2" href="/" onclick="javascript:event.target.port=420">
+                <i class="fas fa-brain pr-2"></i>
+                Zettelkasten
+              </a>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="container notification">
+              <form id="sayform" action="say" method="post">
+                <h5 class="title is-4">Text-to-speech</h5>
+                
+                <input class="input mb-2" v-model="words" type="text" name="words" placeholder="Hi">
+
+                <div class="control mb-2">
+                  <label class="radio">
+                    <input type="radio" v-model="voice" value="Alex" name="voice">
+                    Alex
+                  </label>
+                  <label class="radio">
+                    <input type="radio" v-model="voice" value="Anna" name="voice">
+                    Anna
+                  </label>
+                  <label class="radio">
+                    <input type="radio" v-model="voice" value="Daniel" name="voice">
+                    Daniel
+                  </label>
+                  <label class="radio">
+                    <input type="radio" v-model="voice" value="Yuri" name="voice">
+                    Yuri
+                  </label>
+                </div>
+
+                <button type="submit" class="button is-primary is-large is-fullwidth mb-2" href="/">
+                  <i class="fas fa-bullhorn pr-2"></i>
+                  Announce
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="container notification">
+              <h5 class="title is-4">Dashboard</h5>
+              <h1 id="du">{{disk}}: {{used}}/{{total}} ({{perc}})</h1>
+            </div>
+          </div>
+
+          </div>
+        </div>
+
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+
