@@ -23,6 +23,7 @@ var du = new Vue({
     used:  "0",
     free:  "0",
     perc:  "0",
+    cpu:   "0",
   }
 })
 
@@ -34,13 +35,14 @@ fetch("du")
   du.used = res.used
   du.free = res.free
   du.perc = res.perc
+  du.cpu = res.cpu
 })
 
 var sayform = new Vue({
   el: '#sayform',
   data: {
     words: null,
-    voice: null,
+    voice: "Anna",
   }
 })
 

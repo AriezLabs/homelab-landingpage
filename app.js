@@ -35,24 +35,36 @@ app.get('/main.js', (req, res) => {
   res.sendFile(path.join(__dirname + '/main.js'));
 })
 
+function handle(name, error, stderr) {
+    if (error) {
+        console.log(`error: ${name} ${error.message}`);
+        return true;
+    }
+    if (stderr) {
+        console.log(`stderr: ${name} ${stderr}`);
+        return true;
+    }
+    return false;
+}
+
 app.get('/du', (req, res) => {
   exec("df -lh | grep disk1s1", (error, stdout, stderr) => {
-      if (error) {
-          console.log(`error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
-      }
-      s = stdout.split(" ")
+    if (handle("du", error, stderr))
+      return;
+    s = stdout.split(" ")
+
+    exec("ps -A -o %cpu | awk '{s+=$1} END {print s \"%\"}'", (error, stdout, stderr) => {
+      if (handle("cpu", error, stderr))
+        return;
       res.send({
         disk:  s[0],
         total: s[2],
         used:  s[5],
         free:  s[7],
         perc:  s[11],
+        cpu: stdout.trim(),
       });
+    });
   });
 })
 
