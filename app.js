@@ -48,21 +48,35 @@ function handle(name, error, stderr) {
 }
 
 app.get('/du', (req, res) => {
-  exec("df -lh | grep disk1s1", (error, stdout, stderr) => {
+  exec("df -lh | grep disk2s1", (error, stdout, stderr) => {
     if (handle("du", error, stderr))
       return;
-    s = stdout.split(" ")
 
-    exec("ps -A -o %cpu | awk '{s+=$1} END {print s \"%\"}'", (error, stdout, stderr) => {
-      if (handle("cpu", error, stderr))
+    d1 = stdout.split(" ")
+
+    exec("df -lh | grep disk3s1", (error, stdout, stderr) => {
+      if (handle("du", error, stderr))
         return;
-      res.send({
-        disk:  s[0],
-        total: s[2],
-        used:  s[5],
-        free:  s[7],
-        perc:  s[11],
-        cpu: stdout.trim(),
+
+      d2 = stdout.split(" ")
+
+      exec("ps -A -o %cpu | awk '{s+=$1} END {print s \"%\"}'", (error, stdout, stderr) => {
+        if (handle("cpu", error, stderr))
+          return;
+
+        let data = {
+          disk1:  d1[0],
+          total1: d1[2],
+          used1:  d1[5],
+          perc1:  d1[11],
+          disk2:  d2[0],
+          total2: d2[2],
+          used2:  d2[4],
+          perc2:  d2[10],
+          cpu: stdout.trim(),
+        }
+
+        res.send(data);
       });
     });
   });
