@@ -54,7 +54,7 @@ app.get('/du', (req, res) => {
 
     d1 = stdout.split(" ")
 
-    exec("df -lh | grep disk3s1", (error, stdout, stderr) => {
+    exec("df -lh | grep disk3s5", (error, stdout, stderr) => {
       if (handle("du", error, stderr))
         return;
 
@@ -71,8 +71,8 @@ app.get('/du', (req, res) => {
           perc1:  d1[11],
           disk2:  d2[0],
           total2: d2[2],
-          used2:  d2[4],
-          perc2:  d2[10],
+          used2:  d2[5],
+          perc2:  d2[12],
           cpu: stdout.trim(),
         }
 
